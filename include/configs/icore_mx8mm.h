@@ -101,14 +101,15 @@
 
 #define CONFIG_FEC_MXC
 #define CONFIG_FEC_XCV_TYPE             RGMII
-#define CONFIG_FEC_MXC_PHYADDR          0
+#define CONFIG_FEC_MXC_PHYADDR          3
 #define FEC_QUIRK_ENET_MAC
 
 #define CONFIG_PHY_GIGE
 #define IMX_FEC_BASE			0x30BE0000
 
 #define CONFIG_PHYLIB
-#define CONFIG_PHY_ATHEROS
+#define CONFIG_PHY_MICREL
+#define CONFIG_PHY_MICREL_KSZ9031
 #endif
 
 /*

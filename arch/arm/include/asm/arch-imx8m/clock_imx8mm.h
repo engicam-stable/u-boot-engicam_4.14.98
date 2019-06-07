@@ -524,6 +524,7 @@ enum dram_bypassclk_val {
 #define SYS_PLL3_LOCKED_CTL			(0x3036011c)
 #define SYS_PLL3_MNIT_CTL			(0x30360120)
 #define ANAMIX_MISC_CTL				(0x30360124)
+#define ANAMIX_OUT_ENA				(0x30360128)
 #define DIGPROG					(0x30360800)
 
 #define INTPLL_LOCK_MASK			BIT(31)

@@ -720,6 +720,11 @@ int clock_init()
 	clock_enable(CCGR_SEC_DEBUG, 1);
 
 	enable_display_clk(1);
+	
+	/* MM: Enable CLKOUT1 */
+	val_cfg0 = 0x1B0;
+	writel(val_cfg0, ANAMIX_OUT_ENA);
+
 	return 0;
 };
 

@@ -44,88 +44,6 @@ static iomux_v3_cfg_t const wdog_pads[] = {
 	IMX8MM_PAD_GPIO1_IO02_WDOG1_WDOG_B  | MUX_PAD_CTRL(WDOG_PAD_CTRL),
 };
 
-#ifdef CONFIG_FSL_FSPI
-#define QSPI_PAD_CTRL	(PAD_CTL_DSE2 | PAD_CTL_HYS)
-static iomux_v3_cfg_t const qspi_pads[] = {
-	IMX8MM_PAD_NAND_ALE_QSPI_A_SCLK | MUX_PAD_CTRL(QSPI_PAD_CTRL | PAD_CTL_PE | PAD_CTL_PUE),
-	IMX8MM_PAD_NAND_CE0_B_QSPI_A_SS0_B | MUX_PAD_CTRL(QSPI_PAD_CTRL),
-
-	IMX8MM_PAD_NAND_DATA00_QSPI_A_DATA0 | MUX_PAD_CTRL(QSPI_PAD_CTRL),
-	IMX8MM_PAD_NAND_DATA01_QSPI_A_DATA1 | MUX_PAD_CTRL(QSPI_PAD_CTRL),
-	IMX8MM_PAD_NAND_DATA02_QSPI_A_DATA2 | MUX_PAD_CTRL(QSPI_PAD_CTRL),
-	IMX8MM_PAD_NAND_DATA03_QSPI_A_DATA3 | MUX_PAD_CTRL(QSPI_PAD_CTRL),
-};
-
-int board_qspi_init(void)
-{
-	imx_iomux_v3_setup_multiple_pads(qspi_pads, ARRAY_SIZE(qspi_pads));
-
-	set_clk_qspi();
-
-	return 0;
-}
-#endif
-
-#ifdef CONFIG_MXC_SPI
-#define SPI_PAD_CTRL	(PAD_CTL_DSE2 | PAD_CTL_HYS)
-static iomux_v3_cfg_t const ecspi1_pads[] = {
-	IMX8MM_PAD_ECSPI1_SCLK_ECSPI1_SCLK | MUX_PAD_CTRL(SPI_PAD_CTRL),
-	IMX8MM_PAD_ECSPI1_MOSI_ECSPI1_MOSI | MUX_PAD_CTRL(SPI_PAD_CTRL),
-	IMX8MM_PAD_ECSPI1_MISO_ECSPI1_MISO | MUX_PAD_CTRL(SPI_PAD_CTRL),
-	IMX8MM_PAD_ECSPI1_SS0_GPIO5_IO9 | MUX_PAD_CTRL(NO_PAD_CTRL),
-};
-
-static iomux_v3_cfg_t const ecspi2_pads[] = {
-	IMX8MM_PAD_ECSPI2_SCLK_ECSPI2_SCLK | MUX_PAD_CTRL(SPI_PAD_CTRL),
-	IMX8MM_PAD_ECSPI2_MOSI_ECSPI2_MOSI | MUX_PAD_CTRL(SPI_PAD_CTRL),
-	IMX8MM_PAD_ECSPI2_MISO_ECSPI2_MISO | MUX_PAD_CTRL(SPI_PAD_CTRL),
-	IMX8MM_PAD_ECSPI2_SS0_GPIO5_IO13 | MUX_PAD_CTRL(NO_PAD_CTRL),
-};
-
-static void setup_spi(void)
-{
-	imx_iomux_v3_setup_multiple_pads(ecspi1_pads, ARRAY_SIZE(ecspi1_pads));
-	imx_iomux_v3_setup_multiple_pads(ecspi2_pads, ARRAY_SIZE(ecspi2_pads));
-	gpio_request(IMX_GPIO_NR(5, 9), "ECSPI1 CS");
-	gpio_request(IMX_GPIO_NR(5, 13), "ECSPI2 CS");
-}
-
-int board_spi_cs_gpio(unsigned bus, unsigned cs)
-{
-	if (bus == 0)
-		return IMX_GPIO_NR(5, 9);
-	else
-		return IMX_GPIO_NR(5, 13);
-}
-#endif
-
-#ifdef CONFIG_NAND_MXS
-#define NAND_PAD_CTRL	(PAD_CTL_DSE6 | PAD_CTL_FSEL2 | PAD_CTL_HYS)
-#define NAND_PAD_READY0_CTRL (PAD_CTL_DSE6 | PAD_CTL_FSEL2 | PAD_CTL_PUE)
-static iomux_v3_cfg_t const gpmi_pads[] = {
-	IMX8MM_PAD_NAND_ALE_RAWNAND_ALE | MUX_PAD_CTRL(NAND_PAD_CTRL),
-	IMX8MM_PAD_NAND_CE0_B_RAWNAND_CE0_B | MUX_PAD_CTRL(NAND_PAD_CTRL),
-	IMX8MM_PAD_NAND_CE1_B_RAWNAND_CE1_B | MUX_PAD_CTRL(NAND_PAD_CTRL),
-	IMX8MM_PAD_NAND_CLE_RAWNAND_CLE | MUX_PAD_CTRL(NAND_PAD_CTRL),
-	IMX8MM_PAD_NAND_DATA00_RAWNAND_DATA00 | MUX_PAD_CTRL(NAND_PAD_CTRL),
-	IMX8MM_PAD_NAND_DATA01_RAWNAND_DATA01 | MUX_PAD_CTRL(NAND_PAD_CTRL),
-	IMX8MM_PAD_NAND_DATA02_RAWNAND_DATA02 | MUX_PAD_CTRL(NAND_PAD_CTRL),
-	IMX8MM_PAD_NAND_DATA03_RAWNAND_DATA03 | MUX_PAD_CTRL(NAND_PAD_CTRL),
-	IMX8MM_PAD_NAND_DATA04_RAWNAND_DATA04 | MUX_PAD_CTRL(NAND_PAD_CTRL),
-	IMX8MM_PAD_NAND_DATA05_RAWNAND_DATA05	| MUX_PAD_CTRL(NAND_PAD_CTRL),
-	IMX8MM_PAD_NAND_DATA06_RAWNAND_DATA06	| MUX_PAD_CTRL(NAND_PAD_CTRL),
-	IMX8MM_PAD_NAND_DATA07_RAWNAND_DATA07	| MUX_PAD_CTRL(NAND_PAD_CTRL),
-	IMX8MM_PAD_NAND_RE_B_RAWNAND_RE_B | MUX_PAD_CTRL(NAND_PAD_CTRL),
-	IMX8MM_PAD_NAND_READY_B_RAWNAND_READY_B | MUX_PAD_CTRL(NAND_PAD_READY0_CTRL),
-	IMX8MM_PAD_NAND_WE_B_RAWNAND_WE_B | MUX_PAD_CTRL(NAND_PAD_CTRL),
-	IMX8MM_PAD_NAND_WP_B_RAWNAND_WP_B | MUX_PAD_CTRL(NAND_PAD_CTRL),
-};
-
-static void setup_gpmi_nand(void)
-{
-	imx_iomux_v3_setup_multiple_pads(gpmi_pads, ARRAY_SIZE(gpmi_pads));
-}
-#endif
 
 int board_early_init_f(void)
 {
@@ -136,10 +54,6 @@ int board_early_init_f(void)
 	set_wdog_reset(wdog);
 
 	imx_iomux_v3_setup_multiple_pads(uart_pads, ARRAY_SIZE(uart_pads));
-
-#ifdef CONFIG_NAND_MXS
-	setup_gpmi_nand(); /* SPL will call the board_early_init_f */
-#endif
 
 	return 0;
 }
@@ -171,9 +85,9 @@ int ft_board_setup(void *blob, bd_t *bd)
 #endif
 
 #ifdef CONFIG_FEC_MXC
-#define FEC_RST_PAD IMX_GPIO_NR(4, 22)
+#define FEC_RST_PAD IMX_GPIO_NR(3, 7)
 static iomux_v3_cfg_t const fec1_rst_pads[] = {
-	IMX8MM_PAD_SAI2_RXC_GPIO4_IO22 | MUX_PAD_CTRL(NO_PAD_CTRL),
+	IMX8MM_PAD_NAND_DATA01_GPIO3_IO7 | MUX_PAD_CTRL(NO_PAD_CTRL),
 };
 
 static void setup_iomux_fec(void)
@@ -185,6 +99,7 @@ static void setup_iomux_fec(void)
 	gpio_direction_output(FEC_RST_PAD, 0);
 	udelay(500);
 	gpio_direction_output(FEC_RST_PAD, 1);
+
 }
 
 static int setup_fec(void)
@@ -202,6 +117,7 @@ static int setup_fec(void)
 
 int board_phy_config(struct phy_device *phydev)
 {
+#ifdef TOLTO_MM
 	/* enable rgmii rxc skew and phy mode select to RGMII copper */
 	phy_write(phydev, MDIO_DEVAD_NONE, 0x1d, 0x1f);
 	phy_write(phydev, MDIO_DEVAD_NONE, 0x1e, 0x8);
@@ -210,7 +126,7 @@ int board_phy_config(struct phy_device *phydev)
 	phy_write(phydev, MDIO_DEVAD_NONE, 0x1e, 0x82ee);
 	phy_write(phydev, MDIO_DEVAD_NONE, 0x1d, 0x05);
 	phy_write(phydev, MDIO_DEVAD_NONE, 0x1e, 0x100);
-
+#endif
 	if (phydev->drv->config)
 		phydev->drv->config(phydev);
 	return 0;
@@ -405,21 +321,17 @@ int board_init(void)
 	setup_fec();
 #endif
 
-#ifdef CONFIG_FSL_FSPI
-	board_qspi_init();
-#endif
-
 	return 0;
 }
 
 int board_mmc_get_env_dev(int devno)
 {
-	return devno - 1;
+	return devno;
 }
 
 int mmc_map_to_kernel_blk(int devno)
 {
-	return devno + 1;
+	return devno;
 }
 
 #ifdef CONFIG_VIDEO_MXS
