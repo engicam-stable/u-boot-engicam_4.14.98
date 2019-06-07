@@ -63,6 +63,7 @@ static iomux_v3_cfg_t const usdhc3_pads[] = {
 	IMX8MM_PAD_NAND_CLE_USDHC3_DATA7 | MUX_PAD_CTRL(USDHC_PAD_CTRL),
 };
 
+#ifdef TOLTO_MM
 static iomux_v3_cfg_t const usdhc2_pads[] = {
 	IMX8MM_PAD_SD2_CLK_USDHC2_CLK | MUX_PAD_CTRL(USDHC_PAD_CTRL),
 	IMX8MM_PAD_SD2_CMD_USDHC2_CMD | MUX_PAD_CTRL(USDHC_PAD_CTRL),
@@ -72,6 +73,7 @@ static iomux_v3_cfg_t const usdhc2_pads[] = {
 	IMX8MM_PAD_SD2_DATA3_USDHC2_DATA3 | MUX_PAD_CTRL(USDHC_PAD_CTRL),
 	IMX8MM_PAD_SD2_RESET_B_GPIO2_IO19 | MUX_PAD_CTRL(USDHC_GPIO_PAD_CTRL),
 };
+#endif
 
 static iomux_v3_cfg_t const usdhc1_pads[] = {
 	IMX8MM_PAD_SD1_CLK_USDHC1_CLK | MUX_PAD_CTRL(USDHC_PAD_CTRL),
@@ -95,7 +97,7 @@ static iomux_v3_cfg_t const usdhc2_dat3_pad =
 
 static struct fsl_esdhc_cfg usdhc_cfg[3] = {
 	{USDHC1_BASE_ADDR, 0, 1},
-	{USDHC2_BASE_ADDR, 0, 1},
+/*	{USDHC2_BASE_ADDR, 0, 1}, */
 	{USDHC3_BASE_ADDR, 0, 1},
 };
 
@@ -106,19 +108,19 @@ int board_mmc_init(bd_t *bis)
 	 * According to the board_mmc_init() the following map is done:
 	 * (U-Boot device node)    (Physical Port)
 	 * mmc0                    USDHC1
-	 * mmc1                    USDHC2
+	 * mmc1                    USDHC3
 	 */
 	for (i = 0; i < CONFIG_SYS_FSL_USDHC_NUM; i++) {
-		printf("board_mmc_init %d\n", i);
 		switch (i) {
 		case 0:
 			usdhc_cfg[0].sdhc_clk = mxc_get_clock(MXC_ESDHC_CLK);
-			printf("clk = %d\n", usdhc_cfg[0].sdhc_clk);
 			imx_iomux_v3_setup_multiple_pads(
 				usdhc1_pads, ARRAY_SIZE(usdhc1_pads));
 			break;
 		case 1:
-			usdhc_cfg[1].sdhc_clk = mxc_get_clock(MXC_ESDHC2_CLK);
+			usdhc_cfg[1].sdhc_clk = 
+#ifdef TOLTO_MM
+					mxc_get_clock(MXC_ESDHC2_CLK);
 			imx_iomux_v3_setup_multiple_pads(
 				usdhc2_pads, ARRAY_SIZE(usdhc2_pads));
 			gpio_request(USDHC2_PWR_GPIO, "usdhc2_reset");
@@ -127,7 +129,10 @@ int board_mmc_init(bd_t *bis)
 			gpio_direction_output(USDHC2_PWR_GPIO, 1);
 			break;
 		case 2:
-			usdhc_cfg[2].sdhc_clk = mxc_get_clock(MXC_ESDHC3_CLK);
+
+			usdhc_cfg[2].sdhc_clk = 
+#endif
+				mxc_get_clock(MXC_ESDHC3_CLK);
 			imx_iomux_v3_setup_multiple_pads(
 				usdhc3_pads, ARRAY_SIZE(usdhc3_pads));
 			break;
@@ -137,9 +142,7 @@ int board_mmc_init(bd_t *bis)
 			return -EINVAL;
 		}
 
-		printf("fsl_esdhc_initialize....\n");
 		ret = fsl_esdhc_initialize(bis, &usdhc_cfg[i]);
-		printf("...done\n");
 		if (ret)
 			return ret;
 	}

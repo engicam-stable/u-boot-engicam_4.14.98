@@ -326,11 +326,22 @@ int board_init(void)
 
 int board_mmc_get_env_dev(int devno)
 {
-	return devno;
+	switch (devno) {
+		case 0:
+			return 0;	/* FSL_SDHC: 0 is SDHC1 */
+		default:
+			return 1;	/* FSL_SDHC: 1 is SDHC3 */
+	}
 }
 
 int mmc_map_to_kernel_blk(int devno)
 {
+	switch (devno) {
+		case 0:
+			return 0;	/* FSL_SDHC: 0 is SDHC1 */
+		default:
+			return 2;	/* On kernel emmc is SDHC3 */
+	}
 	return devno;
 }
 
