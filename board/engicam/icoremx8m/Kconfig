@@ -1,0 +1,15 @@
+if TARGET_ICOREMX8M
+
+config SYS_BOARD
+	default "icoremx8m"
+
+config SYS_VENDOR
+	default "engicam"
+
+config SYS_CONFIG_NAME
+	default "icoremx8m"
+
+endif
+
+
+
