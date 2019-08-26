@@ -410,7 +410,6 @@
 	pinctrl-2 = <&pinctrl_usdhc2_200mhz>, <&pinctrl_usdhc2_gpio>;
 	bus-width = <4>;
 	cd-gpios = <&gpio4 22 GPIO_ACTIVE_LOW>;
-	wp-gpios = <&gpio4 21 GPIO_ACTIVE_HIGH>;
 	vmmc-supply = <&reg_usdhc2_vmmc>;
 	status = "okay";
 };
