@@ -87,8 +87,15 @@ config TARGET_IMX8QXP_MEK
 	select SUPPORT_SPL
 	select IMX8QXP
 
-config TARGET_ICORE_MX8X
-	bool "Support i.core mx8x"
+config TARGET_ICORE_MX8XQ
+	bool "Support i.core mx8xq"
+	select BOARD_LATE_INIT
+        select SUPPORT_SPL
+	select IMX8QXP
+
+
+config TARGET_ICORE_MX8XD
+	bool "Support i.core mx8xd"
 	select BOARD_LATE_INIT
         select SUPPORT_SPL
 	select IMX8QXP
@@ -98,6 +105,7 @@ source "board/freescale/imx8qm_arm2/Kconfig"
 source "board/freescale/imx8qm_mek/Kconfig"
 source "board/freescale/imx8qxp_arm2/Kconfig"
 source "board/freescale/imx8qxp_mek/Kconfig"
-source "board/engicam/icore_mx8x/Kconfig"
+source "board/engicam/icore_mx8xd/Kconfig"
+source "board/engicam/icore_mx8xq/Kconfig"
 
 endif
