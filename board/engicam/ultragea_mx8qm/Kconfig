@@ -1,0 +1,14 @@
+if TARGET_ULTRAGEA_MX8QM
+
+config SYS_BOARD
+	default "ultragea_mx8qm"
+
+config SYS_VENDOR
+	default "engicam"
+
+config SYS_CONFIG_NAME
+	default "ultragea_mx8qm"
+
+source "board/freescale/common/Kconfig"
+
+endif
