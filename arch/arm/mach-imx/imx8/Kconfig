@@ -99,6 +99,12 @@ config TARGET_ICORE_MX8XQ
         select SUPPORT_SPL
 	select IMX8QXP
 
+config TARGET_SMARCORE_MX8XQ
+	bool "Support smarcore mx8xq"
+	select BOARD_LATE_INIT
+        select SUPPORT_SPL
+	select IMX8QXP	
+
 
 config TARGET_ICORE_MX8XD
 	bool "Support i.core mx8xd"
@@ -113,6 +119,7 @@ source "board/freescale/imx8qxp_arm2/Kconfig"
 source "board/freescale/imx8qxp_mek/Kconfig"
 source "board/engicam/icore_mx8xd/Kconfig"
 source "board/engicam/icore_mx8xq/Kconfig"
+source "board/engicam/smarcore_mx8xq/Kconfig"
 source "board/engicam/ultragea_mx8qm/Kconfig"
 
 endif
