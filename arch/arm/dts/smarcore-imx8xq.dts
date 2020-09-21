@@ -104,19 +104,19 @@
 			>;
 		};
 
-		pinctrl_lpi2c1: lpi1cgrp {
+	/*	pinctrl_lpi2c1: lpi1cgrp {
 			fsl,pins = <
 				SC_P_USB_SS3_TC1_ADMA_I2C1_SCL	0x06000020
 				SC_P_USB_SS3_TC3_ADMA_I2C1_SDA	0x06000020
 			>;
-		};
+		};*/
 
-		pinctrl_lpi2c3: lpi2cgrp {
+		/*pinctrl_lpi2c3: lpi2cgrp {
 			fsl,pins = <
 				SC_P_SPI3_CS1_ADMA_I2C3_SCL	0x06000020
 				SC_P_MCLK_IN1_ADMA_I2C3_SDA	0x06000020
 			>;
-		};
+		};*/
 
 		pinctrl_lpuart0: lpuart0grp {
 			fsl,pins = <
@@ -215,19 +215,19 @@
 			>;
 		};
 
-		pinctrl_i2c0_mipi_lvds0: mipi_lvds0_i2c0_grp {
+		/*pinctrl_i2c0_mipi_lvds0: mipi_lvds0_i2c0_grp {
 			fsl,pins = <
 				SC_P_MIPI_DSI0_I2C0_SCL_MIPI_DSI0_I2C0_SCL 0xc6000020
 				SC_P_MIPI_DSI0_I2C0_SDA_MIPI_DSI0_I2C0_SDA 0xc6000020
 			>;
-		};
+		};*/
 
-		pinctrl_i2c0_mipi_lvds1: mipi_lvds1_i2c0_grp {
+		/*pinctrl_i2c0_mipi_lvds1: mipi_lvds1_i2c0_grp {
 			fsl,pins = <
 				SC_P_MIPI_DSI1_I2C0_SCL_MIPI_DSI1_I2C0_SCL 0xc6000020
 				SC_P_MIPI_DSI1_I2C0_SDA_MIPI_DSI1_I2C0_SDA 0xc6000020
 			>;
-		};
+		};*/
 	};
 };
 
@@ -294,20 +294,20 @@
 };
 
 &i2c1 {
-	clock-frequency = <100000>;
+	/*clock-frequency = <100000>;
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_lpi2c1>;
-	status = "okay";
+	pinctrl-0 = <&pinctrl_lpi2c1>;*/
+	status = "disabled";
 };
 
 &i2c3 {
-	#address-cells = <1>;
+/*	#address-cells = <1>;
 	#size-cells = <0>;
 	clock-frequency = <100000>;
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_lpi2c3>;
-	status = "okay";
-
+	pinctrl-0 = <&pinctrl_lpi2c3>;*/
+	status = "disabled";
+/*
 	pca9557_a: gpio@18 {
 		compatible = "nxp,pca9557";
 		reg = <0x18>;
@@ -327,35 +327,35 @@
 		reg = <0x1b>;
 		gpio-controller;
 		#gpio-cells = <2>;
-	};
+	};*/
 };
 
 &i2c0_mipi_lvds0 {
-	#address-cells = <1>;
+	/*#address-cells = <1>;
 	#size-cells = <0>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_i2c0_mipi_lvds0>;
-	clock-frequency = <100000>;
-	status = "okay";
+	clock-frequency = <100000>;*/
+	status = "disabled";
 
-	it6263-0@4c {
+	/*it6263-0@4c {
 		compatible = "ITE,it6263";
 		reg = <0x4c>;
-	};
+	};*/
 };
 
 &i2c0_mipi_lvds1 {
-	#address-cells = <1>;
+/*	#address-cells = <1>;
 	#size-cells = <0>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_i2c0_mipi_lvds1>;
-	clock-frequency = <100000>;
-	status = "okay";
+	clock-frequency = <100000>;*/
+	status = "disabled";
 
-	it6263-1@4c {
+	/*it6263-1@4c {
 		compatible = "ITE,it6263";
 		reg = <0x4c>;
-	};
+	};*/
 };
 
 &lpuart0 {
